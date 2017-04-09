@@ -134,7 +134,7 @@ public class Schematic
                     		if (!(block.getState() instanceof InventoryHolder)) {
                     			if (blocks[index] != 0) block.setTypeIdAndData(blocks[index], blockData[index], false);
                     			if (Material.getMaterial(blocks[index]) == Material.LEAVES  || Material.getMaterial(blocks[index]) == Material.LEAVES_2) {
-                    				if (CSCoreLib.randomizer().nextInt(100) < 25) BlockStorage.store(block, tree.getItem());
+                    				if (CSCoreLib.randomizer().nextInt(100) < 5) BlockStorage.store(block, tree.getItem());
                     				block.setData((byte) 0);
                     			}
                     			else if (Material.getMaterial(blocks[index]) == Material.SKULL && block.getState() instanceof Skull) {

@@ -35,6 +35,7 @@ public class PlantsListener implements Listener {
 	
 	Config cfg;
 	BlockFace[] bf = {BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.EAST, BlockFace.SOUTH_EAST, BlockFace.SOUTH, BlockFace.SOUTH_WEST, BlockFace.WEST, BlockFace.NORTH_WEST};
+	boolean fruitDropped = false;
 	
 	public PlantsListener(ExoticGarden plugin) {
 		cfg = plugin.cfg;
@@ -196,7 +197,10 @@ public class PlantsListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onHarvest(BlockBreakEvent e) {
+		fruitDropped = false;
+		if(e.getBlock().getType().equals(Material.SKULL)) fruitDrop(e.getBlock());
 		if (e.getBlock().getType().equals(Material.LEAVES) || e.getBlock().getType().equals(Material.LEAVES_2)) dropFruitFromTree(e.getBlock());
+		if (fruitDropped) return;
 		if (e.getBlock().getType() == Material.LONG_GRASS) {
 			if (CSCoreLib.randomizer().nextInt(100) < 6) e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), ExoticGarden.items.get(ExoticGarden.items.keySet().toArray(new String[ExoticGarden.items.keySet().size()])[CSCoreLib.randomizer().nextInt(ExoticGarden.items.keySet().size())]));
 		}
@@ -261,18 +265,23 @@ public class PlantsListener implements Listener {
 			for (int y = -1; y < 2; y++) {
 				for (int z = -1; z < 2; z++) { //inspect a cube at the reference
 					Block drop = block.getRelative(x, y, z);
-					SlimefunItem check = BlockStorage.check(drop);
-					if (check != null) {
-						for (Tree tree: ExoticGarden.trees) {
-							if (check.getName().equalsIgnoreCase(tree.fruit)) {
-								BlockStorage.clearBlockInfo(drop);
-								ItemStack fruits = check.getItem();
-								drop.getWorld().playEffect(drop.getLocation(), Effect.STEP_SOUND, Material.LEAVES);
-								drop.getWorld().dropItemNaturally(drop.getLocation(), fruits);
-								drop.setType(Material.AIR);
-							}
-						}
-					}
+					fruitDrop(drop);
+				}
+			}
+		}
+	}
+	
+	public void fruitDrop(Block drop) {
+		SlimefunItem check = BlockStorage.check(drop);
+		if (check != null) {
+			for (Tree tree: ExoticGarden.trees) {
+				if (check.getName().equalsIgnoreCase(tree.fruit)) {
+					BlockStorage.clearBlockInfo(drop);
+					ItemStack fruits = check.getItem();
+					drop.getWorld().playEffect(drop.getLocation(), Effect.STEP_SOUND, Material.LEAVES);
+					drop.getWorld().dropItemNaturally(drop.getLocation(), fruits);
+					drop.setType(Material.AIR);
+					fruitDropped = true;
 				}
 			}
 		}
