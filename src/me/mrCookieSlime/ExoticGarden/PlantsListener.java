@@ -111,7 +111,7 @@ public class PlantsListener implements Listener {
 	@EventHandler
 	public void onGenerate(ChunkPopulateEvent e) {
 		if (!cfg.getStringList("world-blacklist").contains(e.getWorld().getName())) {
-		    if (CSCoreLib.randomizer().nextInt(100) < cfg.getInt("chances.TREE")) {
+		    if (CSCoreLib.randomizer().nextInt(100) < cfg.getInt("chances.BUSH")) {
 		    	Berry berry = ExoticGarden.berries.get(CSCoreLib.randomizer().nextInt(ExoticGarden.berries.size()));
 		    	if (berry.getType().equals(PlantType.ORE_PLANT)) return;
 		    	int x, z, y;
@@ -129,6 +129,7 @@ public class PlantsListener implements Listener {
 						}
 						case FRUIT: {
 							current.setType(Material.SKULL);
+							current.getState().update(true);//Added to prevent next statement throwing an exception occasionally
 							Skull s = (Skull) current.getState();
 	    					s.setSkullType(SkullType.PLAYER);
 	    					s.setRotation(bf[new Random().nextInt(bf.length)]);
@@ -168,7 +169,7 @@ public class PlantsListener implements Listener {
 					}
 				}
 		    }
-		    else if (CSCoreLib.randomizer().nextInt(100) < cfg.getInt("chances.BUSH")) {
+		    else if (CSCoreLib.randomizer().nextInt(100) < cfg.getInt("chances.TREE")) {
 				Tree tree = ExoticGarden.trees.get(CSCoreLib.randomizer().nextInt(ExoticGarden.trees.size()));
 				int x, z, y;
 				x = e.getChunk().getX() * 16 + CSCoreLib.randomizer().nextInt(16);
@@ -198,7 +199,7 @@ public class PlantsListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onHarvest(BlockBreakEvent e) {
 		fruitDropped = false;
-		if(e.getBlock().getType().equals(Material.SKULL)) fruitDrop(e.getBlock());
+		if (e.getBlock().getType().equals(Material.SKULL)) fruitDrop(e.getBlock());
 		if (e.getBlock().getType().equals(Material.LEAVES) || e.getBlock().getType().equals(Material.LEAVES_2)) dropFruitFromTree(e.getBlock());
 		if (fruitDropped) return;
 		if (e.getBlock().getType() == Material.LONG_GRASS) {
