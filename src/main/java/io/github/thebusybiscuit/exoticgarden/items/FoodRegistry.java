@@ -17,6 +17,9 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 /**
  * In plugin class we register all our items and recipes for the dishes.
@@ -31,8 +34,14 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 public final class FoodRegistry {
 
     private FoodRegistry() {}
-
+    
     public static void register(@Nonnull ExoticGarden plugin, @Nonnull ItemGroup misc, @Nonnull ItemGroup drinks, @Nonnull ItemGroup food) {
+        
+        ItemStack waterbottle = new ItemStack(Material.POTION);
+        PotionMeta meta = (PotionMeta) waterbottle.getItemMeta();
+        meta.setBasePotionData(new PotionData(PotionType.WATER));
+        waterbottle.setItemMeta(meta);
+        
         new Juice(drinks, new SlimefunItemStack("LIME_SMOOTHIE", new CustomPotion("&aLime Smoothie", Color.LIME, new PotionEffect(PotionEffectType.SATURATION, 10, 0), "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger")), RecipeType.ENHANCED_CRAFTING_TABLE,
         new ItemStack[] {getItem("LIME_JUICE"), getItem("ICE_CUBE"), null, null, null, null, null, null, null})
         .register(plugin);
@@ -68,17 +77,22 @@ public final class FoodRegistry {
         new Juice(drinks, new SlimefunItemStack("THAI_TEA", new CustomPotion("&6Thai Tea", Color.RED, new PotionEffect(PotionEffectType.SATURATION, 14, 0), "", "&7&oRestores &b&o" + "7.0" + " &7&oHunger")), RecipeType.ENHANCED_CRAFTING_TABLE,
         new ItemStack[] {getItem("TEA_LEAF"), new ItemStack(Material.SUGAR), SlimefunItems.HEAVY_CREAM, getItem("COCONUT_MILK"), null, null, null, null, null})
         .register(plugin);
+        
+        new CustomFood(food, new SlimefunItemStack("SWEET_POTATO_PIE", "3418c6b0a29fc1fe791c89774d828ff63d2a9fa6c83373ef3aa47bf3eb79", "&rSweet Potato Pie", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("SWEET_POTATO"), new ItemStack(Material.EGG), SlimefunItems.HEAVY_CREAM, getItem("FLOUR"), null, null, null, null, null},
+        13)
+        .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("PUMPKIN_BREAD", "f3487d457f9062d787a3e6ce1c4664bf7402ec67dd111256f19b38ce4f670", "&rPumpkin Bread", "", "&7&oRestores &b&o" + "4.0" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.PUMPKIN), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, null, null, null, null, null, null},
+        new ItemStack[] {new ItemStack(Material.PUMPKIN), new ItemStack(Material.SUGAR), getItem("FLOUR"), null, null, null, null, null, null},
         8)
         .register(plugin);
 
-        new SlimefunItem(misc, new SlimefunItemStack("MAYO", "7f8d536c8c2c2596bcc1709590a9d7e33061c56e658974cd81bb832ea4d8842", "&rMayo"), RecipeType.GRIND_STONE,
+        new SlimefunItem(misc, new SlimefunItemStack("MAYO", "7f8d536c8c2c2596bcc1709590a9d7e33061c56e658974cd81bb832ea4d8842", "&rMayo"), RecipeType.ENHANCED_CRAFTING_TABLE,
         new ItemStack[] {new ItemStack(Material.EGG), null, null, null, null, null, null, null, null})
         .register(plugin);
 
-        new SlimefunItem(misc, new SlimefunItemStack("MUSTARD", "9b9e99621b9773b29e375e62c6495ff1ac847f85b29816c2eb77b587874ba62", "&eMustard"), RecipeType.GRIND_STONE,
+        new SlimefunItem(misc, new SlimefunItemStack("MUSTARD", "9b9e99621b9773b29e375e62c6495ff1ac847f85b29816c2eb77b587874ba62", "&eMustard"), RecipeType.ENHANCED_CRAFTING_TABLE,
         new ItemStack[] {getItem("MUSTARD_SEED"), null, null, null, null, null, null, null, null})
         .register(plugin);
 
@@ -87,19 +101,19 @@ public final class FoodRegistry {
         .register(plugin);
 
         new SlimefunItem(misc, new SlimefunItemStack("VEGETABLE_OIL", "2acb28fb8a310443af02c7a1283ace95a9906b2e0e6f3636597edbe8cad4e", "&rVegetable Oil"), RecipeType.ENHANCED_CRAFTING_TABLE,
-        new ItemStack[] {new ItemStack(Material.BEETROOT_SEEDS), new ItemStack(Material.WATER_BUCKET), null, null, null, null, null, null, null})
+        new ItemStack[] {new ItemStack(Material.BEETROOT_SEEDS), waterbottle, null, null, null, null, null, null, null})
         .register(plugin);
 
-        new SlimefunItem(misc, new SlimefunItemStack("CORNMEAL", Material.SUGAR, "&rCornmeal"), RecipeType.GRIND_STONE,
+        new SlimefunItem(misc, new SlimefunItemStack("CORNMEAL", Material.SUGAR, "&rCornmeal"), RecipeType.ENHANCED_CRAFTING_TABLE,
         new ItemStack[] {getItem("CORN"), null, null, null, null, null, null, null, null})
         .register(plugin);
 
         new SlimefunItem(misc, new SlimefunItemStack("YEAST", "606be2df2122344bda479feece365ee0e9d5da276afa0e8ce8d848f373dd131", "&rYeast"), RecipeType.ENHANCED_CRAFTING_TABLE,
-        new ItemStack[] {new ItemStack(Material.SUGAR), new ItemStack(Material.WATER_BUCKET), null, null, null, null, null, null, null})
+        new ItemStack[] {new ItemStack(Material.SUGAR), waterbottle, null, null, null, null, null, null, null})
         .register(plugin);
 
         new SlimefunItem(misc, new SlimefunItemStack("MOLASSES", "f21d7b155edf440cb87ec94487cba64e8d128171eb1187c26d5ffe58bd794c", "&8Molasses"), RecipeType.ENHANCED_CRAFTING_TABLE,
-        new ItemStack[] {new ItemStack(Material.BEETROOT), new ItemStack(Material.SUGAR_CANE), new ItemStack(Material.WATER_BUCKET), null, null, null, null, null, null})
+        new ItemStack[] {new ItemStack(Material.BEETROOT), new ItemStack(Material.SUGAR_CANE), waterbottle, null, null, null, null, null, null})
         .register(plugin);
 
         new SlimefunItem(misc, new SlimefunItemStack("BROWN_SUGAR", "964d4247278e1498374aa6b0e47368fe4f138abc94e583e8839965fbe241be", "&rBrown Sugar"), RecipeType.ENHANCED_CRAFTING_TABLE,
@@ -107,7 +121,7 @@ public final class FoodRegistry {
         .register(plugin);
 
         new SlimefunItem(misc, new SlimefunItemStack("COUNTRY_GRAVY", "f21fa9439bfd8384464146f9c67ebd4c5fbf4196924892627eadf3bce1ff", "&rCountry Gravy"), RecipeType.ENHANCED_CRAFTING_TABLE,
-        new ItemStack[] {SlimefunItems.WHEAT_FLOUR, new ItemStack(Material.SUGAR), getItem("BLACK_PEPPER"), null, null, null, null, null, null})
+        new ItemStack[] {getItem("FLOUR"), new ItemStack(Material.SUGAR), getItem("BLACK_PEPPER"), null, null, null, null, null, null})
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CHOCOLATE_BAR", "819f948d17718adace5dd6e050c586229653fef645d7113ab94d17b639cc466", "&rChocolate Bar", "", "&7&oRestores &b&o" + "1.5" + " &7&oHunger"),
@@ -115,29 +129,19 @@ public final class FoodRegistry {
         3)
         .register(plugin);
 
-        new CustomFood(food, new SlimefunItemStack("POTATO_SALAD", "1fe92e11a67b56935446a214caa3723d29e6db56c55fa8d43179a8a3176c6c1", "&rPotato Salad", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
+        new CustomFood(food, new SlimefunItemStack("POTATO_SALAD", "68c03eebf7d4cef7648f3cd94b3b933485ddd6df84b4a9827927c15f33ad2641", "&rPotato Salad", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
         new ItemStack[] {new ItemStack(Material.BAKED_POTATO), getItem("MAYO"), getItem("ONION"), new ItemStack(Material.BOWL), null, null, null, null, null},
         12)
         .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("CHICKEN_SANDWICH", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rChicken Sandwich", "", "&7&oRestores &b&o" + "5.5" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.COOKED_CHICKEN), getItem("MAYO"), new ItemStack(Material.BREAD), null, null, null, null, null, null},
-        11)
-        .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("FISH_SANDWICH", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rFish Sandwich", "", "&7&oRestores &b&o" + "5.5" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.COOKED_COD), getItem("MAYO"), new ItemStack(Material.BREAD), null, null, null, null, null, null},
-        11)
+        
+        new CustomFood(food, new SlimefunItemStack("EGG_SALAD", "68c03eebf7d4cef7648f3cd94b3b933485ddd6df84b4a9827927c15f33ad2641", "&rEgg Salad", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
+        new ItemStack[] {new ItemStack(Material.EGG), getItem("MAYO"), new ItemStack(Material.BOWL), null, null, null, null, null, null},
+        10)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("BAGEL", "502e92f13de3bee69228c384478e761230681e5fce9bda195daeaf8484139331", "&rBagel", "", "&7&oRestores &b&o" + "2.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("YEAST"), SlimefunItems.WHEAT_FLOUR, null, null, null, null, null, null, null},
+        new ItemStack[] {getItem("YEAST"), getItem("FLOUR"), null, null, null, null, null, null, null},
         4)
-        .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("EGG_SALAD", "1fe92e11a67b56935446a214caa3723d29e6db56c55fa8d43179a8a3176c6c1", "&rEgg Salad", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.EGG), getItem("MAYO"), new ItemStack(Material.BOWL), null, null, null, null, null, null},
-        12)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("TOMATO_SOUP", "76366f17428a4990126844f74a02dbf5524f35be1323f8fab0bf61a57ff41de3", "&4Tomato Soup", "", "&7&oRestores &b&o" + "5.5" + " &7&oHunger"),
@@ -165,18 +169,18 @@ public final class FoodRegistry {
         19)
         .register(plugin);
 
-        new CustomFood(food, new SlimefunItemStack("BISCUIT", "ef094456fd794b6531fc6dec6f396b680b9536002063e11ce24d0a74b0b7d885", "&6Biscuit", "", "&7&oRestores &b&o" + "2.0" + " &7&oHunger"),
-        new ItemStack[] {SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, null, null, null, null, null, null, null},
+        new CustomFood(food, new SlimefunItemStack("BISCUIT", "ef094456fd794b6531fc6dec6f396b680b9536002063e11ce24d0a74b0b7d885", "&6Biscuit", "", "&7&oRestores &b&o" + "3.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FLOUR"), new ItemStack(Material.SUGAR), getItem("SALT"), new ItemStack(Material.EGG), getItem("BUTTER"), waterbottle, null, null, null},
         4)
         .register(plugin);
 
-        new CustomFood(food, new SlimefunItemStack("BISCUITS_GRAVY", "28bbb835e22d9ec62e22411b8e015138d5597283ad36e618fe44ba5f1a6b60fd", "&rBiscuits and Country Gravy", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
+        new CustomFood(food, new SlimefunItemStack("BISCUITS_GRAVY", "28bbb835e22d9ec62e22411b8e015138d5597283ad36e618fe44ba5f1a6b60fd", "&rBiscuits and Country Gravy", "", "&7&oRestores &b&o" + "10.0" + " &7&oHunger"),
         new ItemStack[] {getItem("COUNTRY_GRAVY"), getItem("COUNTRY_GRAVY"), getItem("COUNTRY_GRAVY"), getItem("BISCUIT"), getItem("BISCUIT"), getItem("BISCUIT"), null, new ItemStack(Material.BOWL), null},
         13)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CHEESECAKE", "6365b61e79fcb913bc860f4ec635d4a6ab1b74bfab62fb6ea6d89a16aa841", "&rCheesecake", "", "&7&oRestores &b&o" + "8.0" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null, null, null},
+        new ItemStack[] {new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null, null, null},
         16)
         .register(plugin);
 
@@ -201,7 +205,7 @@ public final class FoodRegistry {
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("BLACKBERRY_COBBLER", "c6c36523c2d11b8c8ea2e992291c52a654760ec72dcc32da2cb63616481ee", "&8Blackberry Cobbler", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.SUGAR), getItem("BLACKBERRY"), SlimefunItems.WHEAT_FLOUR, null, null, null, null, null, null},
+        new ItemStack[] {new ItemStack(Material.SUGAR), getItem("BLACKBERRY"), getItem("FLOUR"), null, null, null, null, null, null},
         12)
         .register(plugin);
 
@@ -232,18 +236,33 @@ public final class FoodRegistry {
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("BLT", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rBLT", "", "&7&oRestores &b&o" + "9.0" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.BREAD), new ItemStack(Material.COOKED_PORKCHOP), getItem("TOMATO"), getItem("LETTUCE"), null, null, null, null, null},
+        new ItemStack[] {new ItemStack(Material.BREAD), getItem("BACON"), getItem("TOMATO"), getItem("LETTUCE"), null, null, null, null, null},
         18)
         .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("LEAFY_CHICKEN_SANDWICH", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rLeafy Chicken Sandwich", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
+        
+        new CustomFood(food, new SlimefunItemStack("CHICKEN_SANDWICH", "f7b9f08ada4e8ba586a04ed2e9e25fe8b9d568a665243f9c603799a7c896736", "&rChicken Sandwich", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
+        new ItemStack[] {new ItemStack(Material.BREAD), new ItemStack(Material.COOKED_CHICKEN), null, null, null, null, null, null, null},
+        11)
+        .register(plugin);
+        
+        new CustomFood(food, new SlimefunItemStack("LEAFY_CHICKEN_SANDWICH", "f7b9f08ada4e8ba586a04ed2e9e25fe8b9d568a665243f9c603799a7c896736", "&rLeafy Chicken Sandwich", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
         new ItemStack[] {getItem("CHICKEN_SANDWICH"), getItem("LETTUCE"), null, null, null, null, null, null, null},
         13)
         .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("LEAFY_FISH_SANDWICH", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rLeafy Fish Sandwich", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("FISH_SANDWICH"), getItem("LETTUCE"), null, null, null, null, null, null, null},
+        
+        new CustomFood(food, new SlimefunItemStack("CHICKEN_CHEESE_SANDWICH", "f7b9f08ada4e8ba586a04ed2e9e25fe8b9d568a665243f9c603799a7c896736", "&rChicken Cheese Sandwich", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("CHICKEN_SANDWICH"), SlimefunItems.CHEESE, null, null, null, null, null, null, null},
         13)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("FISH_SANDWICH", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rFish Sandwich", "", "&7&oRestores &b&o" + "5.5" + " &7&oHunger"),
+        new ItemStack[] {new ItemStack(Material.COOKED_COD), getItem("MAYO"), new ItemStack(Material.BREAD), null, null, null, null, null, null},
+        11)
+        .register(plugin);
+        
+        new CustomFood(food, new SlimefunItemStack("LEAFY_FISH_SANDWICH", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rLeafy Fish Sandwich", "", "&7&oRestores &b&o" + "7.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FISH_SANDWICH"), getItem("LETTUCE"), null, null, null, null, null, null, null},
+        11)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("HAMBURGER", "cdadf1744433e1c79d1d59d2777d939de159a24cf57e8a61c82bc4fe3777553c", "&rHamburger", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
@@ -265,6 +284,32 @@ public final class FoodRegistry {
         new ItemStack[] {getItem("CHEESEBURGER"), getItem("LETTUCE"), getItem("TOMATO"), null, null, null, null, null, null},
         16)
         .register(plugin);
+        
+        
+        new CustomFood(food, new SlimefunItemStack("CHEESE_PIZZA", "7c3cb8ae6f65a1f5ddc66ea2f86d18f1651aa5c2d845a73d44b9e3339c7e", "&rCheese Pizza", "", "&7&oRestores &b&o" + "7.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("FLOUR"), getItem("TOMATO"), getItem("CHEESE"), null, null, null, null, null, null},
+        15)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("BACON_PIZZA", "899554fb47ee5aa96187e81505331b8f3492fff7b49f59e500d6535296692382", "&rBacon Pizza", "", "&7&oRestores &b&o" + "8.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FLOUR"), getItem("TOMATO"), getItem("CHEESE"), getItem("BACON"), null, null, null, null, null},
+        16)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("MUSHROOM_PIZZA", "b597dcad6acad3d35fa3b5e8af9aaf131d0feb095624f45b36453eae7dbaf14", "&rMushroom Pizza", "", "&7&oRestores &b&o" + "8.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FLOUR"), getItem("TOMATO"), getItem("CHEESE"), new ItemStack(Material.BROWN_MUSHROOM), new ItemStack(Material.RED_MUSHROOM), null, null, null, null},
+        16)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("FISH_PIZZA", "3752d75e8de1711178fbc028d88fe4ef908b893dc5c887b339d01fb888a24", "&rFish Pizza", "", "&7&oRestores &b&o" + "8.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FLOUR"), getItem("TOMATO"), getItem("CHEESE"), new ItemStack(Material.COOKED_SALMON), new ItemStack(Material.COOKED_COD), null, null, null, null},
+        16)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("VEGGIE_PIZZA", "d5c441cba4d6b57ded54c8369216a6c7156fb887d4b5639ee934f1bb6cbfdb", "&rVeggie Pizza", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("FLOUR"), getItem("TOMATO"), getItem("CHEESE"), getItem("ONION"), getItem("CILANTRO"), getItem("BLACK_PEPPER"), null, null, null},
+        17)
+        .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("GARLIC_BREAD", "a33fa7d3e63b280a5d7e2bb09332dff86b17decd2b09eccdd62da5265597f74d", "&rGarlic Bread", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
         new ItemStack[] {getItem("GARLIC"), new ItemStack(Material.BREAD), null, null, null, null, null, null, null},
@@ -277,7 +322,7 @@ public final class FoodRegistry {
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CARROT_CAKE", "f9136514f342e7c5208a1422506a866158ef84d2b249220139e8bf6032e193", "&rCarrot Cake", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.CARROT), SlimefunItems.WHEAT_FLOUR, new ItemStack(Material.SUGAR), new ItemStack(Material.EGG), null, null, null, null, null},
+        new ItemStack[] {new ItemStack(Material.CARROT), getItem("FLOUR"), new ItemStack(Material.SUGAR), new ItemStack(Material.EGG), null, null, null, null, null},
         12)
         .register(plugin);
 
@@ -316,13 +361,13 @@ public final class FoodRegistry {
         18)
         .register(plugin);
 
-        new CustomFood(food, new SlimefunItemStack("JAMMY_DODGER", "1d00dfb3a57c068a0cc7b624d8d8852070435d2634c0e5da9cbbab46174af0df", "&cJammy Dodger", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
+        new CustomFood(food, new SlimefunItemStack("JAMMY_DODGER", "1d00dfb3a57c068a0cc7b624d8d8852070435d2634c0e5da9cbbab46174af0df", "&cJammy Dodger", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
         new ItemStack[] {null, getItem("BISCUIT"), null, null, getItem("RASPBERRY_JUICE"), null, null, getItem("BISCUIT"), null},
         10)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("PANCAKES", "347f4f5a74c6691280cd80e7148b49b2ce17dcf64fd55368627f5d92a976a6a8", "&rPancakes", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("WHEAT_FLOUR"), new ItemStack(Material.SUGAR), getItem("BUTTER"), new ItemStack(Material.EGG), new ItemStack(Material.EGG), null, null, null, null},
+        new ItemStack[] {getItem("FLOUR"), new ItemStack(Material.SUGAR), getItem("BUTTER"), new ItemStack(Material.EGG), new ItemStack(Material.EGG), null, null, null, null},
         12)
         .register(plugin);
 
@@ -357,63 +402,43 @@ public final class FoodRegistry {
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("SHEPARDS_PIE", "3418c6b0a29fc1fe791c89774d828ff63d2a9fa6c83373ef3aa47bf3eb79", "&rShepard's Pie", "", "&7&oRestores &b&o" + "8.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("CABBAGE"), new ItemStack(Material.CARROT), SlimefunItems.WHEAT_FLOUR, new ItemStack(Material.COOKED_BEEF), getItem("TOMATO"), null, null, null, null},
+        new ItemStack[] {getItem("CABBAGE"), new ItemStack(Material.CARROT), getItem("FLOUR"), new ItemStack(Material.COOKED_BEEF), getItem("TOMATO"), null, null, null, null},
         16)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CHICKEN_POT_PIE", "3418c6b0a29fc1fe791c89774d828ff63d2a9fa6c83373ef3aa47bf3eb79", "&rChicken Pot Pie", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.COOKED_CHICKEN), new ItemStack(Material.CARROT), SlimefunItems.WHEAT_FLOUR, new ItemStack(Material.POTATO), null, null, null, null, null},
+        new ItemStack[] {new ItemStack(Material.COOKED_CHICKEN), new ItemStack(Material.CARROT), getItem("FLOUR"), new ItemStack(Material.POTATO), null, null, null, null, null},
         17)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CHOCOLATE_CAKE", "9119fca4f28a755d37fbe5dcf6d8c3ef50fe394c1a7850bc7e2b71ee78303c4c", "&rChocolate Cake", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, new ItemStack(Material.EGG), null, null, null, null},
+        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, new ItemStack(Material.EGG), null, null, null, null},
         17)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CREAM_COOKIE", "dfd71e20fc50abf0de2ef7decfc01ce27ad51955759e072ceaab96355f594f0", "&rCream Cookie", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, null, null, null, null},
+        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, null, null, null, null},
         12)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("BLUEBERRY_MUFFIN", "83794c736fc76e45706830325b95969466d86f8d7b28fce8edb2c75e2ab25c", "&rBlueberry Muffin", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("BLUEBERRY"), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null},
+        new ItemStack[] {getItem("BLUEBERRY"), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null},
         13)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("PUMPKIN_MUFFIN", "83794c736fc76e45706830325b95969466d86f8d7b28fce8edb2c75e2ab25c", "&rPumpkin Muffin", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
-        new ItemStack[] {new ItemStack(Material.PUMPKIN), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null},
+        new ItemStack[] {new ItemStack(Material.PUMPKIN), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null},
         13)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CHOCOLATE_CHIP_MUFFIN", "83794c736fc76e45706830325b95969466d86f8d7b28fce8edb2c75e2ab25c", "&rChocolate Chip Muffin", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null},
+        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, SlimefunItems.HEAVY_CREAM, new ItemStack(Material.EGG), null, null, null},
         13)
         .register(plugin);
 
-        new CustomFood(food, new SlimefunItemStack("BOSTON_CREAM_PIE", "dfd71e20fc50abf0de2ef7decfc01ce27ad51955759e072ceaab96355f594f0", "&rBoston Cream Pie", "", "&7&oRestores &b&o" + "4.5" + " &7&oHunger"),
+        new CustomFood(food, new SlimefunItemStack("BOSTON_CREAM_PIE", "dfd71e20fc50abf0de2ef7decfc01ce27ad51955759e072ceaab96355f594f0", "&rBoston Cream Pie", "", "&7&oRestores &b&o" + "5.5" + " &7&oHunger"),
         new ItemStack[] {null, getItem("CHOCOLATE_BAR"), null, null, SlimefunItems.HEAVY_CREAM, null, null, getItem("BISCUIT"), null},
         9)
-        .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("HOT_DOG", "33f2d7d7a8b1b969142881eb5a87e737b5f75fb808b9a157adddb2c6aec382", "&rHot Dog", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
-        new ItemStack[] {null, null, null, null, new ItemStack(Material.COOKED_PORKCHOP), null, null, new ItemStack(Material.BREAD), null},
-        10)
-        .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("BACON_WRAPPED_CHEESE_FILLED_HOT_DOG", "33f2d7d7a8b1b969142881eb5a87e737b5f75fb808b9a157adddb2c6aec382", "&rBacon wrapped Cheese filled Hot Dog", "&7&o\"When I chef\" - @Eyamaz", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("BACON"), getItem("HOT_DOG"), getItem("BACON"), null, getItem("CHEESE"), null, null, null, null},
-        17)
-        .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("BBQ_BACON_WRAPPED_HOT_DOG", "33f2d7d7a8b1b969142881eb5a87e737b5f75fb808b9a157adddb2c6aec382", "&rBBQ Bacon wrapped Hot Dog", "&7&o\"wanna talk about hot dogs?\" - @Pahimar", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("BACON"), getItem("HOT_DOG"), getItem("BACON"), null, getItem("BBQ_SAUCE"), null, null, null, null},
-        17)
-        .register(plugin);
-
-        new CustomFood(food, new SlimefunItemStack("BBQ_DOUBLE_BACON_WRAPPED_HOT_DOG_IN_A_TORTILLA_WITH_CHEESE", "33f2d7d7a8b1b969142881eb5a87e737b5f75fb808b9a157adddb2c6aec382", "&rBBQ Double Bacon wrapped Hot Dog in a Tortilla with Cheese", "&7&o\"When I chef\" - @Eyamaz", "", "&7&oRestores &b&o" + "10.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("BACON"), getItem("BBQ_SAUCE"), getItem("BACON"), getItem("BACON"), new ItemStack(Material.COOKED_PORKCHOP), getItem("BACON"), getItem("CORNMEAL"), getItem("CHEESE"), getItem("CORNMEAL")},
-        20)
         .register(plugin);
 
         new CustomFood(drinks, new SlimefunItemStack("SWEETENED_TEA", "d8e94ddd769a5bea748376b4ec7383fd36d267894d7c3bee011e8e4f5fcd7", "&aSweetened Tea", "", "&7&oRestores &b&o" + "3.0" + " &7&oHunger"),
@@ -440,24 +465,39 @@ public final class FoodRegistry {
         new ItemStack[] {getItem("LEMON_JUICE"), new ItemStack(Material.SUGAR), null, null, null, null, null, null, null})
         .register(plugin);
 
-        new CustomFood(food, new SlimefunItemStack("SWEET_POTATO_PIE", "3418c6b0a29fc1fe791c89774d828ff63d2a9fa6c83373ef3aa47bf3eb79", "&rSweet Potato Pie", "", "&7&oRestores &b&o" + "6.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("SWEET_POTATO"), new ItemStack(Material.EGG), SlimefunItems.HEAVY_CREAM, SlimefunItems.WHEAT_FLOUR, null, null, null, null, null},
-        13)
-        .register(plugin);
-
         new CustomFood(food, new SlimefunItemStack("LAMINGTON", "9119fca4f28a755d37fbe5dcf6d8c3ef50fe394c1a7850bc7e2b71ee78303c4c", "&rLamington", "", "&7&oRestores &b&o" + "9.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, getItem("COCONUT"), null, null, null, null},
+        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, getItem("COCONUT"), null, null, null, null},
         18)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("WAFFLES", "347f4f5a74c6691280cd80e7148b49b2ce17dcf64fd55368627f5d92a976a6a8", "&rWaffles", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("WHEAT_FLOUR"), new ItemStack(Material.EGG), new ItemStack(Material.SUGAR), getItem("BUTTER"), null, null, null, null, null},
+        new ItemStack[] {getItem("FLOUR"), new ItemStack(Material.EGG), new ItemStack(Material.SUGAR), getItem("BUTTER"), null, null, null, null, null},
         12)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CLUB_SANDWICH", "a14216d10714082bbe3f412423e6b19232352f4d64f9aca3913cb46318d3ed", "&rClub Sandwich", "", "&7&oRestores &b&o" + "9.5" + " &7&oHunger"),
         new ItemStack[] {new ItemStack(Material.BREAD), getItem("MAYO"), getItem("BACON"), getItem("TOMATO"), getItem("LETTUCE"), getItem("MUSTARD"), null, null, null},
         19)
+        .register(plugin);
+        
+        new CustomFood(food, new SlimefunItemStack("HOT_DOG", "15a995f41c4630e879f34dbac41f92317558534f2d4d7a468b670e1dc52177", "&rHot Dog", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
+        new ItemStack[] {null, null, null, null, new ItemStack(Material.COOKED_PORKCHOP), null, null, new ItemStack(Material.BREAD), null},
+        10)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("BACON_WRAPPED_CHEESE_FILLED_HOT_DOG", "15a995f41c4630e879f34dbac41f92317558534f2d4d7a468b670e1dc52177", "&rBacon wrapped Cheese filled Hot Dog", "&7&o\"When I chef\" - @Eyamaz", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("BACON"), getItem("HOT_DOG"), getItem("BACON"), null, getItem("CHEESE"), null, null, null, null},
+        17)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("BBQ_BACON_WRAPPED_HOT_DOG", "15a995f41c4630e879f34dbac41f92317558534f2d4d7a468b670e1dc52177", "&rBBQ Bacon wrapped Hot Dog", "&7&o\"wanna talk about hot dogs?\" - @Pahimar", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("BACON"), getItem("HOT_DOG"), getItem("BACON"), null, getItem("BBQ_SAUCE"), null, null, null, null},
+        17)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("BBQ_DOUBLE_BACON_WRAPPED_HOT_DOG_IN_A_TORTILLA_WITH_CHEESE", "15a995f41c4630e879f34dbac41f92317558534f2d4d7a468b670e1dc52177", "&rBBQ Double Bacon wrapped Hot Dog in a Tortilla with Cheese", "&7&o\"When I chef\" - @Eyamaz", "", "&7&oRestores &b&o" + "10.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("BACON"), getItem("BBQ_SAUCE"), getItem("BACON"), getItem("BACON"), new ItemStack(Material.COOKED_PORKCHOP), getItem("BACON"), getItem("CORNMEAL"), getItem("CHEESE"), getItem("CORNMEAL")},
+        20)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("BURRITO", "a387a621e266186e60683392eb274ebb225b04868ab959177d9dc181d8f286", "&rBurrito", "", "&7&oRestores &b&o" + "9.0" + " &7&oHunger"),
@@ -476,7 +516,7 @@ public final class FoodRegistry {
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("LASAGNA", "03a3574a848f36ae37121e9058aa61c12a261ee5a3716f6d8269e11e19e37", "&rLasagna", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("TOMATO"), getItem("CHEESE"), SlimefunItems.WHEAT_FLOUR, getItem("TOMATO"), getItem("CHEESE"), new ItemStack(Material.COOKED_BEEF), null, null, null},
+        new ItemStack[] {getItem("TOMATO"), getItem("CHEESE"), getItem("FLOUR"), getItem("TOMATO"), getItem("CHEESE"), new ItemStack(Material.COOKED_BEEF), null, null, null},
         17)
         .register(plugin);
 
@@ -514,12 +554,12 @@ public final class FoodRegistry {
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("CHOCOLATE_PEAR_CAKE", "9119fca4f28a755d37fbe5dcf6d8c3ef50fe394c1a7850bc7e2b71ee78303c4c", "&rChocolate Pear Cake", "", "&7&oRestores &b&o" + "9.5" + " &7&oHunger"),
-        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, getItem("PEAR"), new ItemStack(Material.EGG), null, null, null},
+        new ItemStack[] {getItem("CHOCOLATE_BAR"), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, getItem("PEAR"), new ItemStack(Material.EGG), null, null, null},
         19)
         .register(plugin);
 
         new CustomFood(food, new SlimefunItemStack("APPLE_PEAR_CAKE", "3418c6b0a29fc1fe791c89774d828ff63d2a9fa6c83373ef3aa47bf3eb79", "&cApple Pear Cake", "", "&7&oRestores &b&o" + "9.0" + " &7&oHunger"),
-        new ItemStack[] {getItem("APPLE"), new ItemStack(Material.SUGAR), SlimefunItems.WHEAT_FLOUR, SlimefunItems.BUTTER, getItem("PEAR"), new ItemStack(Material.EGG), null, null, null},
+        new ItemStack[] {getItem("OAK_APPLE"), new ItemStack(Material.SUGAR), getItem("FLOUR"), SlimefunItems.BUTTER, getItem("PEAR"), new ItemStack(Material.EGG), null, null, null},
         18)
         .register(plugin);
 
@@ -527,7 +567,96 @@ public final class FoodRegistry {
         new ItemStack[] {getItem("RED_BELL_PEPPER"), getItem("ONION"), getItem("GARLIC"), getItem("TOMATO"), null, null, null, null, null},
         14)
         .register(plugin);
+        
+        new CustomFood(food, new SlimefunItemStack("SWEET_POTATO_SALAD", "68c03eebf7d4cef7648f3cd94b3b933485ddd6df84b4a9827927c15f33ad2641", "&rSweet Potato Salad", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("SWEET_POTATO"), getItem("MAYO"), getItem("ONION"), new ItemStack(Material.BOWL), null, null, null, null, null},
+        10)
+        .register(plugin);
+        
+        new CustomFood(food, new SlimefunItemStack("FRIED_CHICKEN", Material.COOKED_CHICKEN, "&eFried Chicken", "&7&o\"Kentucky Fried Chicken!\" - @Wencrow", "", "&7&oRestores &b&o" + "3.5" + " &7&oHunger"),
+        new ItemStack[] {new ItemStack(Material.CHICKEN), new ItemStack(Material.EGG), getItem("FLOUR"), SlimefunItems.SALT, getItem("BLACK_PEPPER"), getItem("VEGETABLE_OIL"), null, null, null},
+        7)
+        .register(plugin);
 
+        new CustomFood(food, new SlimefunItemStack("FRIED_CHICKEN_BUCKET", "b8fb0502a3aa5f8bd32a5ea5e519c3dd353234170dfef959ee8adb9487fea", "&eFried Chicken Bucket", "", "&7&oRestores &b&o" + "21.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), null, new ItemStack(Material.BUCKET), null},
+        42)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("FRIED_CHICKEN_SANDWICH", "f7b9f08ada4e8ba586a04ed2e9e25fe8b9d568a665243f9c603799a7c896736", "&eFried Chicken Sandwich", "", "&7&oRestores &b&o" + "5.5" + " &7&oHunger"),
+        new ItemStack[] {new ItemStack(Material.BREAD), getItem("FRIED_CHICKEN"), null, null, null, null, null, null, null},
+        11)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("FRIED_CHICKEN_AND_CHEESE_SANDWICH", "f7b9f08ada4e8ba586a04ed2e9e25fe8b9d568a665243f9c603799a7c896736", "&rFried Chicken and Cheese Sandwich", "", "&7&oRestores &b&o" + "7.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FRIED_CHICKEN_SANDWICH"), SlimefunItems.CHEESE, null, null, null, null, null, null, null},
+        14)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("SWEET_POTATO_FRIES", "563b8aeaf1df11488efc9bd303c233a87ccba3b33f7fba9c2fecaee9567f053", "&rSweet Potato Fries", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("SWEET_POTATO"), getItem("SALT"), null, null, null, null, null, null, null},
+        12)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("HASHBROWN", "641b3cc9f5f45d6a74826b81a39db930fde855bc1417aa8ab59e73784913e362", "&rHashbrown", "", "&7&oRestores &b&o" + "4.5" + " &7&oHunger"),
+        new ItemStack[] {new ItemStack(Material.POTATO), getItem("SALT"), getItem("BLACK_PEPPER"), getItem("VEGETABLE_OIL"), null, null, null, null, null},
+        9)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("SWEET_POTATO_HASHBROWN", "641b3cc9f5f45d6a74826b81a39db930fde855bc1417aa8ab59e73784913e362", "&rSweet Potato Hashbrown", "", "&7&oRestores &b&o" + "4.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("SWEET_POTATO"), getItem("SALT"), getItem("BLACK_PEPPER"), getItem("VEGETABLE_OIL"), null, null, null, null, null},
+        9)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("NOODLES", "9174b34c549eed8bafe727618bab6821afcb1787b5decd1eecd6c213e7e7c6d", "&rNoodles", "", "&7&oRestores &b&o" + "5.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FLOUR"), waterbottle, null, null, null, null, null, null, null},
+        10)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("BUTTERED_NOODLES", "9174b34c549eed8bafe727618bab6821afcb1787b5decd1eecd6c213e7e7c6d", "&rButtered Noodles", "", "&7&oRestores &b&o" + "6.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("NOODLES"), SlimefunItems.BUTTER, null, null, null, null, null, null, null},
+        12)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("MAC_N_CHEESE", "6bbecba5231805aaadda81d764b096eee62ed2e4cb447448544f5182b091f101", "&rMac n Cheese", "", "&7&oRestores &b&o" + "7.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("BUTTERED_NOODLES"), SlimefunItems.CHEESE, null, null, null, null, null, null, null},
+        14)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("POUTINE", "de068423d7b97f5db4d80951b61e380f24da41fcff7a33b2b264ba9e4b162ece", "&rPoutine", "", "&7&oRestores &b&o" + "7.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FRIES"), SlimefunItems.CHEESE, getItem("COUNTRY_GRAVY"), null, null, null, null, null, null},
+        14)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("SWEET_POTATO_POUTINE", "de068423d7b97f5db4d80951b61e380f24da41fcff7a33b2b264ba9e4b162ece", "&rSweet Potato Poutine", "", "&7&oRestores &b&o" + "7.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("SWEET_POTATO_FRIES"), SlimefunItems.CHEESE, getItem("COUNTRY_GRAVY"), null, null, null, null, null, null},
+        14)
+        .register(plugin);
+
+        new CustomFood(drinks, new SlimefunItemStack("SODA", "27c9c71f3328ec3a7daaf122aaadd65d69c2afc7738bc09519397b39c71da9a3", "&aSoda", "", "&7&oRestores &b&o" + "2.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("ORANGE"), getItem("LIME"), getItem("LEMON"), new ItemStack(Material.SUGAR), waterbottle, getItem("ICE_CUBE"), null, null, null},
+        4)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("MC_MUFFIN", "b8c34b9c7f568c229e5e2a7b914ddb6e710d1c095532d84019bf2de7d10cfd4e", "&rMc Muffin", "", "&7&oRestores &b&o" + "4.5" + " &7&oHunger"),
+        new ItemStack[] {new ItemStack(Material.BREAD), new ItemStack(Material.COOKED_PORKCHOP), SlimefunItems.CHEESE, new ItemStack(Material.EGG), null, null, null, null, null},
+        9)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("MC_NUGGETS", "11ec45cef70e846ff48ea174b60dc6ad2e2ab7a7ccf7eff32e914c53d5f3fc87", "&rMc Nuggets", "", "&7&oRestores &b&o" + "7.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), getItem("FRIED_CHICKEN"), null, null, null, null, null},
+        14)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("CHEESEBURGER_HAPPY_MEAL", "5f4984251a1b3d62dcbcd694b143e27d1850733f426087b860a45453a88b1481", "&rCheeseburger Happpy Meal", "", "&7&oRestores &b&o" + "8.5" + " &7&oHunger"),
+        new ItemStack[] {getItem("CHEESEBURGER"), getItem("FRIES"), new ItemStack(Material.COOKIE), getItem("OAK_APPLE_JUICE"), null, null, null, null, null},
+        17)
+        .register(plugin);
+
+        new CustomFood(food, new SlimefunItemStack("NUGGET_HAPPY_MEAL", "5f4984251a1b3d62dcbcd694b143e27d1850733f426087b860a45453a88b1481", "&rNugget Happy Meal", "", "&7&oRestores &b&o" + "8.0" + " &7&oHunger"),
+        new ItemStack[] {getItem("MC_NUGGETS"), getItem("FRIES"), new ItemStack(Material.COOKIE), getItem("OAK_APPLE_JUICE"), null, null, null, null, null},
+        16)
+        .register(plugin);      
     }
     
     @Nullable
