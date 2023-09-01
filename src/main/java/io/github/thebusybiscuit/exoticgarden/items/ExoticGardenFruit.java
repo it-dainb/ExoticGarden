@@ -87,12 +87,13 @@ public class ExoticGardenFruit extends SimpleSlimefunItem<ItemUseHandler> {
             case TRAPPED_CHEST:
             case HOPPER:
             case ENDER_CHEST:
+            case SHULKER_BOX:
                 return true;
             default:
                 return material.name().equals("BARREL") ||
-                        material.name().endsWith("_SHULKER_BOX") ||
-                        material.name().endsWith("DOOR") ||
-                        material.name().endsWith("BED");
+                    material.name().endsWith("_SHULKER_BOX") ||
+                    material.name().endsWith("DOOR") ||
+                    material.name().endsWith("BED");
         }
     }
 
