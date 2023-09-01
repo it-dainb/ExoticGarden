@@ -166,63 +166,83 @@ public class ExoticGarden extends JavaPlugin implements SlimefunAddon {
 
         FoodRegistry.register(this, miscItemGroup, drinksItemGroup, foodItemGroup);
 
-        registerMagicalPlant("Dirt", new ItemStack(Material.DIRT, 2), "1ab43b8c3d34f125e5a3f8b92cd43dfd14c62402c33298461d4d4d7ce2d3aea", 
+        registerMagicalPlant("Dirt", new ItemStack(Material.DIRT, 16), "1ab43b8c3d34f125e5a3f8b92cd43dfd14c62402c33298461d4d4d7ce2d3aea",
         new ItemStack[] {null, new ItemStack(Material.DIRT), null, new ItemStack(Material.DIRT), new ItemStack(Material.WHEAT_SEEDS), new ItemStack(Material.DIRT), null, new ItemStack(Material.DIRT), null});
 
-        registerMagicalPlant("Coal", new ItemStack(Material.COAL, 2), "7788f5ddaf52c5842287b9427a74dac8f0919eb2fdb1b51365ab25eb392c47",
+        registerMagicalPlant("Coal", new ItemStack(Material.COAL, 8), "711107f70f8ca0474f023243bd382bbd6b4149aef4f42b25ddbbcfec8798b4dc",
         new ItemStack[] {null, new ItemStack(Material.COAL_ORE), null, new ItemStack(Material.COAL_ORE), new ItemStack(Material.WHEAT_SEEDS), new ItemStack(Material.COAL_ORE), null, new ItemStack(Material.COAL_ORE), null});
 
-        registerMagicalPlant("Iron", new ItemStack(Material.IRON_INGOT), "db97bdf92b61926e39f5cddf12f8f7132929dee541771e0b592c8b82c9ad52d",
+        registerMagicalPlant("Copper", new CustomItemStack(SlimefunItems.COPPER_DUST, 8), "1bc2e38db661ddb784cee3fd730046eabd568e53199312a60dcdf0af1a5535c7",
+        new ItemStack[] {null, SlimefunItems.COPPER_DUST, null, SlimefunItems.COPPER_DUST, getItem("COAL_PLANT"), SlimefunItems.COPPER_DUST, null, SlimefunItems.COPPER_DUST, null});
+
+        registerMagicalPlant("Iron", new CustomItemStack(SlimefunItems.IRON_DUST, 8), "8385aaedd784faef8e8f6f782fa48d07c2fc2bbcf6fea1fbc9b9862d05d228c1",
         new ItemStack[] {null, new ItemStack(Material.IRON_BLOCK), null, new ItemStack(Material.IRON_BLOCK), getItem("COAL_PLANT"), new ItemStack(Material.IRON_BLOCK), null, new ItemStack(Material.IRON_BLOCK), null});
 
-        registerMagicalPlant("Gold", SlimefunItems.GOLD_4K, "e4df892293a9236f73f48f9efe979fe07dbd91f7b5d239e4acfd394f6eca",
-        new ItemStack[] {null, SlimefunItems.GOLD_16K, null, SlimefunItems.GOLD_16K, getItem("IRON_PLANT"), SlimefunItems.GOLD_16K, null, SlimefunItems.GOLD_16K, null});
-
-        registerMagicalPlant("Copper", new CustomItemStack(SlimefunItems.COPPER_DUST, 8), "d4fc72f3d5ee66279a45ac9c63ac98969306227c3f4862e9c7c2a4583c097b8a",
-        new ItemStack[] {null, SlimefunItems.COPPER_DUST, null, SlimefunItems.COPPER_DUST, getItem("GOLD_PLANT"), SlimefunItems.COPPER_DUST, null, SlimefunItems.COPPER_DUST, null});
-
-        registerMagicalPlant("Aluminum", new CustomItemStack(SlimefunItems.ALUMINUM_DUST, 8), "f4455341eaff3cf8fe6e46bdfed8f501b461fb6f6d2fe536be7d2bd90d2088aa",
+        registerMagicalPlant("Aluminum", new CustomItemStack(SlimefunItems.ALUMINUM_DUST, 4), "241101036ee0975bfe9a75833a5fa7d98cf5ecbbf2924cdbdf8a7ddd3f3cb8c",
         new ItemStack[] {null, SlimefunItems.ALUMINUM_DUST, null, SlimefunItems.ALUMINUM_DUST, getItem("IRON_PLANT"), SlimefunItems.ALUMINUM_DUST, null, SlimefunItems.ALUMINUM_DUST, null});
 
-        registerMagicalPlant("Tin", new CustomItemStack(SlimefunItems.TIN_DUST, 8), "6efb43ba2fe6959180ee7307f3f054715a34c0a07079ab73712547ffd753dedd",
-        new ItemStack[] {null, SlimefunItems.TIN_DUST, null, SlimefunItems.TIN_DUST, getItem("IRON_PLANT"), SlimefunItems.TIN_DUST, null, SlimefunItems.TIN_DUST, null});
-
-        registerMagicalPlant("Silver", new CustomItemStack(SlimefunItems.SILVER_DUST, 8), "1dd968b1851aa7160d1cd9db7516a8e1bf7b7405e5245c5338aa895fe585f26c",
-        new ItemStack[] {null, SlimefunItems.SILVER_DUST, null, SlimefunItems.SILVER_DUST, getItem("IRON_PLANT"), SlimefunItems.SILVER_DUST, null, SlimefunItems.SILVER_DUST, null});
-
-        registerMagicalPlant("Lead", new CustomItemStack(SlimefunItems.LEAD_DUST, 8), "93c3c418039c4b28b0da75a6d9b22712c7015432d4f4226d6cc0a77d54b64178",
+        registerMagicalPlant("Lead", new CustomItemStack(SlimefunItems.LEAD_DUST, 4), "790e42e0c4df59ad00b135b6b7bbceab10a85eeb9b6efd83b184244c96830b3d",
         new ItemStack[] {null, SlimefunItems.LEAD_DUST, null, SlimefunItems.LEAD_DUST, getItem("IRON_PLANT"), SlimefunItems.LEAD_DUST, null, SlimefunItems.LEAD_DUST, null});
 
-        registerMagicalPlant("Redstone", new ItemStack(Material.REDSTONE, 8), "e8deee5866ab199eda1bdd7707bdb9edd693444f1e3bd336bd2c767151cf2",
+        registerMagicalPlant("Magnesium", new CustomItemStack(SlimefunItems.MAGNESIUM_DUST, 4), "e8c99d857a5b34331699ce6b5449d8d75f6c50b294ea1a29108f66ca086528bb",
+        new ItemStack[] {null, SlimefunItems.MAGNESIUM_DUST, null, SlimefunItems.MAGNESIUM_DUST, getItem("IRON_PLANT"), SlimefunItems.MAGNESIUM_DUST, null, SlimefunItems.MAGNESIUM_DUST, null});
+
+        registerMagicalPlant("Silver", new CustomItemStack(SlimefunItems.SILVER_DUST, 4), "984f9e0052bacae2f42a12db529fef8d4ae93a7badd724d7aecd5c61329f2c8b",
+        new ItemStack[] {null, SlimefunItems.SILVER_DUST, null, SlimefunItems.SILVER_DUST, getItem("IRON_PLANT"), SlimefunItems.SILVER_DUST, null, SlimefunItems.SILVER_DUST, null});
+
+        registerMagicalPlant("Tin", new CustomItemStack(SlimefunItems.TIN_DUST, 4), "83f659c91663e3002f3036ef5b9662f9bb9e55c131dc6fbc69440d776b754182",
+        new ItemStack[] {null, SlimefunItems.TIN_DUST, null, SlimefunItems.TIN_DUST, getItem("IRON_PLANT"), SlimefunItems.TIN_DUST, null, SlimefunItems.TIN_DUST, null});
+
+        registerMagicalPlant("Zinc", new CustomItemStack(SlimefunItems.ZINC_DUST, 4), "26ec74b9c9ed876ec9ae466a79c4c10f0a0fe7cd8dd49492cc103f2eaa7aa932",
+        new ItemStack[] {null, SlimefunItems.ZINC_DUST, null, SlimefunItems.ZINC_DUST, getItem("IRON_PLANT"), SlimefunItems.ZINC_DUST, null, SlimefunItems.ZINC_DUST, null});
+
+        registerMagicalPlant("Gold", new CustomItemStack(SlimefunItems.GOLD_DUST, 4), "85b4abd4f07b6894607cbd870868f67e025c7fb552a1a57f56f77c044cca41ce",
+        new ItemStack[] {null, SlimefunItems.GOLD_16K, null, SlimefunItems.GOLD_16K, getItem("IRON_PLANT"), SlimefunItems.GOLD_16K, null, SlimefunItems.GOLD_16K, null});
+
+        registerMagicalPlant("Redstone", new ItemStack(Material.REDSTONE, 8), "632ccf7814539a61f8bfc15bcf111a39ad8ae163c36e44b6379415556475d72a",
         new ItemStack[] {null, new ItemStack(Material.REDSTONE_BLOCK), null, new ItemStack(Material.REDSTONE_BLOCK), getItem("GOLD_PLANT"), new ItemStack(Material.REDSTONE_BLOCK), null, new ItemStack(Material.REDSTONE_BLOCK), null});
 
-        registerMagicalPlant("Lapis", new ItemStack(Material.LAPIS_LAZULI, 16), "2aa0d0fea1afaee334cab4d29d869652f5563c635253c0cbed797ed3cf57de0",
+        registerMagicalPlant("Lapis", new ItemStack(Material.LAPIS_LAZULI, 16), "51001b425111bfe0acff710a8b41ea95e3b936a85e5bb6517160bab587e8870f",
         new ItemStack[] {null, new ItemStack(Material.LAPIS_ORE), null, new ItemStack(Material.LAPIS_ORE), getItem("REDSTONE_PLANT"), new ItemStack(Material.LAPIS_ORE), null, new ItemStack(Material.LAPIS_ORE), null});
 
-        registerMagicalPlant("Ender", new ItemStack(Material.ENDER_PEARL, 4), "4e35aade81292e6ff4cd33dc0ea6a1326d04597c0e529def4182b1d1548cfe1",
+        registerMagicalPlant("Ender", new ItemStack(Material.ENDER_PEARL, 2), "4e35aade81292e6ff4cd33dc0ea6a1326d04597c0e529def4182b1d1548cfe1",
         new ItemStack[] {null, new ItemStack(Material.ENDER_PEARL), null, new ItemStack(Material.ENDER_PEARL), getItem("LAPIS_PLANT"), new ItemStack(Material.ENDER_PEARL), null, new ItemStack(Material.ENDER_PEARL), null});
 
-        registerMagicalPlant("Quartz", new ItemStack(Material.QUARTZ, 8), "26de58d583c103c1cd34824380c8a477e898fde2eb9a74e71f1a985053b96",
+        registerMagicalPlant("Quartz", new ItemStack(Material.QUARTZ, 4), "26de58d583c103c1cd34824380c8a477e898fde2eb9a74e71f1a985053b96",
         new ItemStack[] {null, new ItemStack(Material.NETHER_QUARTZ_ORE), null, new ItemStack(Material.NETHER_QUARTZ_ORE), getItem("ENDER_PLANT"), new ItemStack(Material.NETHER_QUARTZ_ORE), null, new ItemStack(Material.NETHER_QUARTZ_ORE), null});
 
-        registerMagicalPlant("Diamond", new ItemStack(Material.DIAMOND), "f88cd6dd50359c7d5898c7c7e3e260bfcd3dcb1493a89b9e88e9cbecbfe45949",
+        registerMagicalPlant("Diamond", new ItemStack(Material.DIAMOND), "733b6c907f1c2a1ae54f90aafbc9e561f2f4dd4ec4b73e56d54955bc1dfcc2a0",
         new ItemStack[] {null, new ItemStack(Material.DIAMOND), null, new ItemStack(Material.DIAMOND), getItem("QUARTZ_PLANT"), new ItemStack(Material.DIAMOND), null, new ItemStack(Material.DIAMOND), null});
 
-        registerMagicalPlant("Emerald", new ItemStack(Material.EMERALD), "4fc495d1e6eb54a386068c6cb121c5875e031b7f61d7236d5f24b77db7da7f",
+        registerMagicalPlant("Emerald", new ItemStack(Material.EMERALD), "ba40baeb96fea1bd6ee064696cdb74ffd08a6f7c40617d462e4e2da8faaf73e5",
         new ItemStack[] {null, new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD), getItem("DIAMOND_PLANT"), new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD), null});
 
         if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_16)) {
-            registerMagicalPlant("Netherite", new ItemStack(Material.NETHERITE_INGOT), "27957f895d7bc53423a35aac59d584b41cc30e040269c955e451fe680a1cc049", 
-            new ItemStack[] {null, new ItemStack(Material.NETHERITE_BLOCK), null, new ItemStack(Material.NETHERITE_BLOCK), getItem("EMERALD_PLANT"), new ItemStack(Material.NETHERITE_BLOCK), null, new ItemStack(Material.NETHERITE_BLOCK), null});
+            registerMagicalPlant("Netherite", new ItemStack(Material.NETHERITE_SCRAP), "9fa2610545c5193b1776fae6f5d6f17579d6002aea032f9f52b54bd3bff59a51",
+            new ItemStack[] {null, new ItemStack(Material.NETHER_STAR), null, new ItemStack(Material.NETHERITE_BLOCK), getItem("EMERALD_PLANT"), new ItemStack(Material.NETHERITE_BLOCK), null, new ItemStack(Material.NETHERITE_BLOCK), null});
         }
 
-        registerMagicalPlant("Glowstone", new ItemStack(Material.GLOWSTONE_DUST, 8), "65d7bed8df714cea063e457ba5e87931141de293dd1d9b9146b0f5ab383866",
+        registerMagicalPlant("Blaze", new ItemStack(Material.BLAZE_ROD, 2), "7717933c40fbf936aa9288513efe19bda4601efc0e4ecad2e023b0c1d28444b",
+        new ItemStack[] { null, new ItemStack(Material.BLAZE_ROD), null, new ItemStack(Material.BLAZE_ROD), getItem("GOLD_PLANT"), new ItemStack(Material.BLAZE_ROD), null, new ItemStack(Material.BLAZE_ROD), null });
+
+        registerMagicalPlant("Glowstone", new ItemStack(Material.GLOWSTONE_DUST, 8), "cd9d195f092e43505b5499e732dcdb9e852069d5ad35c11432c990afcfe64037",
         new ItemStack[] { null, new ItemStack(Material.GLOWSTONE), null, new ItemStack(Material.GLOWSTONE), getItem("REDSTONE_PLANT"), new ItemStack(Material.GLOWSTONE), null, new ItemStack(Material.GLOWSTONE), null });
 
-        registerMagicalPlant("Obsidian", new ItemStack(Material.OBSIDIAN, 2), "7840b87d52271d2a755dedc82877e0ed3df67dcc42ea479ec146176b02779a5",
+        registerMagicalPlant("Sulfate", new CustomItemStack(SlimefunItems.SULFATE, 2), "20d9cb52a09f8f4a75b9bffe7ac20c0c85ac1ef57cf93fc2040436d660ba98ba",
+        new ItemStack[] { null, SlimefunItems.SULFATE, null, SlimefunItems.SULFATE, getItem("GLOWSTONE_PLANT"), SlimefunItems.SULFATE, null, SlimefunItems.SULFATE, null });
+
+        registerMagicalPlant("Uranium", new CustomItemStack(SlimefunItems.TINY_URANIUM,1), "90614e3abf64d53496794cd8ae68597fc7266c61794bd1e48d4519868ae3cad0",
+        new ItemStack[] { null, SlimefunItems.BOOSTED_URANIUM, null, SlimefunItems.BLISTERING_INGOT_3, getItem("SULFATE_PLANT"), SlimefunItems.BLISTERING_INGOT_3, null, SlimefunItems.BOOSTED_URANIUM, null });
+
+        registerMagicalPlant("Obsidian", new ItemStack(Material.OBSIDIAN, 1), "7840b87d52271d2a755dedc82877e0ed3df67dcc42ea479ec146176b02779a5",
         new ItemStack[] {null, new ItemStack(Material.OBSIDIAN), null, new ItemStack(Material.OBSIDIAN), getItem("LAPIS_PLANT"), new ItemStack(Material.OBSIDIAN), null, new ItemStack(Material.OBSIDIAN), null});
 
-        registerMagicalPlant("Slime", new ItemStack(Material.SLIME_BALL, 8), "90e65e6e5113a5187dad46dfad3d3bf85e8ef807f82aac228a59c4a95d6f6a",
+        if (Slimefun.getMinecraftVersion().isAtLeast(MinecraftVersion.MINECRAFT_1_17)) {
+            registerMagicalPlant("Amethyst", new ItemStack(Material.AMETHYST_CLUSTER, 1), "3f4876b6a5d6dd785e091fd134a21c91d0a9cac5a622e448b5ffcb65ef45278",
+            new ItemStack[] {null, new ItemStack(Material.AMETHYST_SHARD), null, new ItemStack(Material.AMETHYST_SHARD), getItem("OBSIDIAN_PLANT"), new ItemStack(Material.AMETHYST_SHARD), null, new ItemStack(Material.AMETHYST_SHARD), null});
+        }
+
+        registerMagicalPlant("Slime", new ItemStack(Material.SLIME_BALL, 2), "90e65e6e5113a5187dad46dfad3d3bf85e8ef807f82aac228a59c4a95d6f6a",
         new ItemStack[] {null, new ItemStack(Material.SLIME_BALL), null, new ItemStack(Material.SLIME_BALL), getItem("ENDER_PLANT"), new ItemStack(Material.SLIME_BALL), null, new ItemStack(Material.SLIME_BALL), null});
 
         new Crook(miscItemGroup, new SlimefunItemStack("CROOK", new CustomItemStack(Material.WOODEN_HOE, "&rCrook", "", "&7+ &b25% &7Sapling Drop Rate")), RecipeType.ENHANCED_CRAFTING_TABLE,
