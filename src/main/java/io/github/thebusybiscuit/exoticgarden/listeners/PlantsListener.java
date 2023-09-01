@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -26,6 +28,7 @@ import org.bukkit.event.world.ChunkPopulateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.block.BlockBurnEvent;
 
 import io.github.thebusybiscuit.exoticgarden.Berry;
 import io.github.thebusybiscuit.exoticgarden.ExoticGarden;
@@ -40,6 +43,8 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction
 import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerHead;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.skins.PlayerSkin;
 import io.github.thebusybiscuit.slimefun4.libraries.paperlib.PaperLib;
+import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
+import static io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag.values;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 
 public class PlantsListener implements Listener {
@@ -364,13 +369,48 @@ public class PlantsListener implements Listener {
             e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), item);
         }
     }
+    
+        @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+        public void onBlockBurn(BlockBurnEvent e) {
+        if (!Slimefun.getWorldSettingsService().isWorldEnabled(e.getBlock().getWorld())) {
+            return;
+        }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onInteract(PlayerInteractEvent e) {
+        String id = BlockStorage.checkID(e.getBlock());
+
+        if (id != null) {
+            for (Berry berry : ExoticGarden.getBerries()) {
+                if (id.equalsIgnoreCase(berry.getID())) {
+                    e.setCancelled(true);
+                    return;
+                }
+            }
+        }
+
+        dropFruitFromTree(e.getBlock());
+        ItemStack item = BlockStorage.retrieve(e.getBlock());
+
+        if (item != null) {
+            e.setCancelled(true);
+            e.getBlock().setType(Material.AIR);
+            e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), item);
+        }
+    }
+       
+    private static final Map<String, SlimefunTag> nameLookup = new HashMap<>();
+    private static final SlimefunTag[] valuesCache = values();
+    
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) { 
+        Material mainHand = e.getPlayer().getInventory().getItemInMainHand().getType();
+        Material offHand = e.getPlayer().getInventory().getItemInOffHand().getType();   
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (e.getHand() != EquipmentSlot.HAND) return;
-        if (e.getPlayer().isSneaking()) return;
-
+        if (e.getPlayer().isSneaking()) return;      
+        for (SlimefunTag tag : valuesCache) {
+            nameLookup.put(tag.name(), SlimefunTag.GRAVITY_AFFECTED_BLOCKS);
+            if(tag.isTagged(mainHand) || tag.isTagged(offHand)) return;
+            }
         if (Slimefun.getProtectionManager().hasPermission(e.getPlayer(), e.getClickedBlock().getLocation(), Interaction.BREAK_BLOCK)) {
             ItemStack item = ExoticGarden.harvestPlant(e.getClickedBlock());
 
